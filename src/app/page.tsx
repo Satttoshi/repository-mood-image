@@ -8,7 +8,6 @@ import {
   getUser,
   getRepositoryContributors,
 } from "@/services/github";
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 
