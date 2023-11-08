@@ -24,31 +24,31 @@ const fetcher = async (url: string, data: Workflow_json) => {
   return response.data;
 };
 
-const testData1: analysisDataInput = {
-  linesOfCode: 2250,
+const ffwRoomsTestData: analysisDataInput = {
+  linesOfCode: 6274,
   vulnerabilities: {
-    total: 0,
-    totalDependencies: 1187,
+    total: 25,
+    totalDependencies: 396,
     stats: {
-      critical: 2,
-      high: 0,
-      moderate: 0,
+      critical: 10,
+      high: 7,
+      moderate: 8,
       low: 0,
       info: 0,
     },
   },
-  numberOfContributors: 22,
+  numberOfContributors: 6,
 };
 
-const testData2: analysisDataInput = {
-  linesOfCode: 2250,
+const budniTestData: analysisDataInput = {
+  linesOfCode: 176324,
   vulnerabilities: {
-    total: 0,
-    totalDependencies: 1187,
+    total: 102,
+    totalDependencies: 2255,
     stats: {
-      critical: 2,
-      high: 0,
-      moderate: 0,
+      critical: 16,
+      high: 54,
+      moderate: 32,
       low: 0,
       info: 0,
     },
@@ -136,15 +136,15 @@ export default function Home() {
         </button>
         <button
           className={styles.button}
-          onClick={() => fetchRunpod(testData1)}
+          onClick={() => fetchRunpod(ffwRoomsTestData)}
         >
-          Fetch me
+          FFW Rooms
         </button>
         <button
           className={styles.button}
-          onClick={() => fetchRunpod(testData2)}
+          onClick={() => fetchRunpod(budniTestData)}
         >
-          Fetch me
+          Budni.de
         </button>
         <button
           className={styles.button}
