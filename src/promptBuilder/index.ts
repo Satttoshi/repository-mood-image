@@ -1,10 +1,14 @@
-type Workflow_json = {
+export type Workflow_json = {
   input: {
     prompt: {
       '11': { class_type: string; inputs: { control_net_name: string } };
       '13': {
         class_type: string;
-        inputs: { image: (string | number)[]; high_threshold: number; low_threshold: number }
+        inputs: {
+          image: (string | number)[];
+          high_threshold: number;
+          low_threshold: number;
+        };
       };
       '3': {
         class_type: string;
@@ -18,14 +22,26 @@ type Workflow_json = {
           sampler_name: string;
           model: (string | number)[];
           positive: (string | number)[];
-          steps: number
-        }
+          steps: number;
+        };
       };
       '4': { class_type: string; inputs: { ckpt_name: string } };
-      '5': { class_type: string; inputs: { batch_size: number; width: number; height: number } };
-      '16': { class_type: string; inputs: { image: string; 'choose file to upload': string } };
-      '6': { class_type: string; inputs: { text: any; clip: (string | number)[] } };
-      '7': { class_type: string; inputs: { text: string; clip: (string | number)[] } };
+      '5': {
+        class_type: string;
+        inputs: { batch_size: number; width: number; height: number };
+      };
+      '16': {
+        class_type: string;
+        inputs: { image: string; 'choose file to upload': string };
+      };
+      '6': {
+        class_type: string;
+        inputs: { text: any; clip: (string | number)[] };
+      };
+      '7': {
+        class_type: string;
+        inputs: { text: string; clip: (string | number)[] };
+      };
       '18': {
         class_type: string;
         inputs: {
@@ -35,14 +51,20 @@ type Workflow_json = {
           strength: number;
           start_percent: number;
           positive: (string | number)[];
-          end_percent: number
-        }
+          end_percent: number;
+        };
       };
-      '8': { class_type: string; inputs: { vae: (string | number)[]; samples: (string | number)[] } };
-      '9': { class_type: string; inputs: { filename_prefix: string; images: (string | number)[] } }
-    }
+      '8': {
+        class_type: string;
+        inputs: { vae: (string | number)[]; samples: (string | number)[] };
+      };
+      '9': {
+        class_type: string;
+        inputs: { filename_prefix: string; images: (string | number)[] };
+      };
+    };
   };
-}
+};
 
 export type analysisDataInput = {
   linesOfCode: number;
@@ -65,7 +87,10 @@ type InterpolationInput = {
   image: string;
 };
 
-function mapContributorsToPromptAndImage(numberOfContributors: number): { prompt: string, imageName: string } {
+function mapContributorsToPromptAndImage(numberOfContributors: number): {
+  prompt: string;
+  imageName: string;
+} {
   if (numberOfContributors === 1) {
     return { prompt: 'A small house', imageName: 'house1.png' };
   } else if (numberOfContributors === 2) {
@@ -81,11 +106,19 @@ function mapContributorsToPromptAndImage(numberOfContributors: number): { prompt
   }
 }
 
-function mapVulnerabilityToString(vulnerability: analysisDataInput['vulnerabilities']): string {
+function mapVulnerabilityToString(
+  vulnerability: analysisDataInput['vulnerabilities'],
+): string {
   let prompt = '';
 
-  const percentage = Math.round((vulnerability.total / vulnerability.totalDependencies) * 100);
-  const points = vulnerability.stats.critical * 4 + vulnerability.stats.high * 3 + vulnerability.stats.moderate * 2 + vulnerability.stats.low;
+  const percentage = Math.round(
+    (vulnerability.total / vulnerability.totalDependencies) * 100,
+  );
+  const points =
+    vulnerability.stats.critical * 4 +
+    vulnerability.stats.high * 3 +
+    vulnerability.stats.moderate * 2 +
+    vulnerability.stats.low;
   const total = percentage + points;
   const totalDivided = Math.min(total / 2, 100);
 
@@ -108,9 +141,11 @@ function mapVulnerabilityToString(vulnerability: analysisDataInput['vulnerabilit
   } else if (totalDivided >= 71 && totalDivided <= 80) {
     prompt = 'many holes in the walls and broken windows which are smoking';
   } else if (totalDivided >= 81 && totalDivided <= 90) {
-    prompt = 'many holes in the walls and broken windows which are smoking and on fire';
+    prompt =
+      'many holes in the walls and broken windows which are smoking and on fire';
   } else if (totalDivided >= 91 && totalDivided <= 100) {
-    prompt = 'many holes in the walls and broken windows which are smoking and on fire and there is a tornado, destructed ruins';
+    prompt =
+      'many holes in the walls and broken windows which are smoking and on fire and there is a tornado, destructed ruins';
   } else {
     prompt = 'clean pristine walls';
   }
@@ -118,148 +153,109 @@ function mapVulnerabilityToString(vulnerability: analysisDataInput['vulnerabilit
   return prompt;
 }
 
-function interpolateJson ({ positivePrompt, image }: InterpolationInput): Workflow_json {
+function interpolateJson({
+  positivePrompt,
+  image,
+}: InterpolationInput): Workflow_json {
   return {
-    "input": {
-      "prompt": {
-        "3": {
-          "inputs": {
-            "seed": 0,
-            "steps": 25,
-            "cfg": 7,
-            "sampler_name": "euler",
-            "scheduler": "exponential",
-            "denoise": 1,
-            "model": [
-              "4",
-              0
-            ],
-            "positive": [
-              "18",
-              0
-            ],
-            "negative": [
-              "18",
-              1
-            ],
-            "latent_image": [
-              "5",
-              0
-            ]
+    input: {
+      prompt: {
+        '3': {
+          inputs: {
+            seed: 0,
+            steps: 25,
+            cfg: 7,
+            sampler_name: 'euler',
+            scheduler: 'exponential',
+            denoise: 1,
+            model: ['4', 0],
+            positive: ['18', 0],
+            negative: ['18', 1],
+            latent_image: ['5', 0],
           },
-          "class_type": "KSampler"
+          class_type: 'KSampler',
         },
-        "4": {
-          "inputs": {
-            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        '4': {
+          inputs: {
+            ckpt_name: 'sd_xl_base_1.0.safetensors',
           },
-          "class_type": "CheckpointLoaderSimple"
+          class_type: 'CheckpointLoaderSimple',
         },
-        "5": {
-          "inputs": {
-            "width": 1024,
-            "height": 1024,
-            "batch_size": 1
+        '5': {
+          inputs: {
+            width: 1024,
+            height: 1024,
+            batch_size: 1,
           },
-          "class_type": "EmptyLatentImage"
+          class_type: 'EmptyLatentImage',
         },
-        "6": {
-          "inputs": {
-            "text": positivePrompt,
-            "clip": [
-              "4",
-              1
-            ]
+        '6': {
+          inputs: {
+            text: positivePrompt,
+            clip: ['4', 1],
           },
-          "class_type": "CLIPTextEncode"
+          class_type: 'CLIPTextEncode',
         },
-        "7": {
-          "inputs": {
-            "text": "bad quality, text, watermark, humans, person, animall, rane, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone",
-            "clip": [
-              "4",
-              1
-            ]
+        '7': {
+          inputs: {
+            text: 'bad quality, text, watermark, humans, person, animall, rane, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone',
+            clip: ['4', 1],
           },
-          "class_type": "CLIPTextEncode"
+          class_type: 'CLIPTextEncode',
         },
-        "8": {
-          "inputs": {
-            "samples": [
-              "3",
-              0
-            ],
-            "vae": [
-              "4",
-              2
-            ]
+        '8': {
+          inputs: {
+            samples: ['3', 0],
+            vae: ['4', 2],
           },
-          "class_type": "VAEDecode"
+          class_type: 'VAEDecode',
         },
-        "9": {
-          "inputs": {
-            "filename_prefix": "ComfyUI",
-            "images": [
-              "8",
-              0
-            ]
+        '9': {
+          inputs: {
+            filename_prefix: 'ComfyUI',
+            images: ['8', 0],
           },
-          "class_type": "SaveImage"
+          class_type: 'SaveImage',
         },
-        "11": {
-          "inputs": {
-            "control_net_name": "control-lora-canny-rank256.safetensors"
+        '11': {
+          inputs: {
+            control_net_name: 'control-lora-canny-rank256.safetensors',
           },
-          "class_type": "ControlNetLoader"
+          class_type: 'ControlNetLoader',
         },
-        "13": {
-          "inputs": {
-            "low_threshold": 0.4,
-            "high_threshold": 0.8,
-            "image": [
-              "16",
-              0
-            ]
+        '13': {
+          inputs: {
+            low_threshold: 0.4,
+            high_threshold: 0.8,
+            image: ['16', 0],
           },
-          "class_type": "Canny"
+          class_type: 'Canny',
         },
-        "16": {
-          "inputs": {
-            "image": image,
-            "choose file to upload": "image"
+        '16': {
+          inputs: {
+            image: image,
+            'choose file to upload': 'image',
           },
-          "class_type": "LoadImage"
+          class_type: 'LoadImage',
         },
-        "18": {
-          "inputs": {
-            "strength": 0.8,
-            "start_percent": 0,
-            "end_percent": 0.75,
-            "positive": [
-              "6",
-              0
-            ],
-            "negative": [
-              "7",
-              0
-            ],
-            "control_net": [
-              "11",
-              0
-            ],
-            "image": [
-              "13",
-              0
-            ]
+        '18': {
+          inputs: {
+            strength: 0.8,
+            start_percent: 0,
+            end_percent: 0.75,
+            positive: ['6', 0],
+            negative: ['7', 0],
+            control_net: ['11', 0],
+            image: ['13', 0],
           },
-          "class_type": "ControlNetApplyAdvanced"
-        }
-      }
-    }
-  }
+          class_type: 'ControlNetApplyAdvanced',
+        },
+      },
+    },
+  };
 }
 
-function promptBuilder (input: analysisDataInput): Workflow_json {
+function promptBuilder(input: analysisDataInput): Workflow_json {
   let prompt = '';
   const numberOfContributors = input.numberOfContributors ?? 0;
   const promptAndImage = mapContributorsToPromptAndImage(numberOfContributors);
