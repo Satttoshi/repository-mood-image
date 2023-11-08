@@ -87,19 +87,19 @@ type InterpolationInput = {
   image: string;
 };
 
-function mapContributorsToPromptAndImage(numberOfContributors: number): {
+function mapLinesOfCodeToPromptAndImage(linesOfCode: number): {
   prompt: string;
   imageName: string;
 } {
-  if (numberOfContributors === 1) {
+  if (linesOfCode >= 1 && linesOfCode <= 1000) {
     return { prompt: 'A small house', imageName: 'house1.png' };
-  } else if (numberOfContributors === 2) {
+  } else if (linesOfCode >= 1001 && linesOfCode <= 2500) {
     return { prompt: 'A village house', imageName: 'house2.png' };
-  } else if (numberOfContributors >= 3 && numberOfContributors <= 5) {
+  } else if (linesOfCode >= 2501 && linesOfCode <= 7500) {
     return { prompt: 'A modern big house', imageName: 'house3.png' };
-  } else if (numberOfContributors >= 6 && numberOfContributors <= 10) {
+  } else if (linesOfCode >= 7501 && linesOfCode <= 15000) {
     return { prompt: 'A mansion', imageName: 'house4.png' };
-  } else if (numberOfContributors >= 11) {
+  } else if (linesOfCode >= 15001) {
     return { prompt: 'A large big modern building', imageName: 'house5.png' };
   } else {
     return { prompt: 'A small house', imageName: 'house1.png' };
@@ -117,7 +117,7 @@ function mapVulnerabilityToString(
   const points =
     vulnerability.stats.critical * 4 +
     vulnerability.stats.high * 2 +
-    vulnerability.stats.moderate * 1 +
+    vulnerability.stats.moderate +
     vulnerability.stats.low;
   const total = percentage + points;
   const totalDivided = Math.min(total / 2, 100);
@@ -262,7 +262,8 @@ function interpolateJson({
 function promptBuilder(input: analysisDataInput): Workflow_json {
   let prompt = '';
   const numberOfContributors = input.numberOfContributors ?? 0;
-  const promptAndImage = mapContributorsToPromptAndImage(numberOfContributors);
+  const linesOfCode = input.linesOfCode ?? 0;
+  const promptAndImage = mapLinesOfCodeToPromptAndImage(linesOfCode);
   prompt += promptAndImage.prompt;
 
   prompt += mapVulnerabilityToString(input.vulnerabilities);
