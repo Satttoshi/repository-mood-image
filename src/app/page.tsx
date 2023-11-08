@@ -136,6 +136,7 @@ export default function Home() {
       <div>
         {imageURL ? (
           <Image
+            onClick={() => setImageURL('')}
             className={styles.image}
             src={imageURL}
             alt="Image"
