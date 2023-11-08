@@ -20,12 +20,6 @@ const fetcher = async (url: string) => {
 };
 
 export default function Home() {
-  /*const { data: runPodData, error } = useSWR<RunPodData, any>('/api/runpod', fetcher);
-
-  if (error) return <div>Error: {error.message}</div>;
-  if (!runPodData) return <div>Loading...</div>;
-
-  console.log(runPodData);*/
 
   const handleFetchFromGithub = async () => {
     console.log("hi");

@@ -109,7 +109,7 @@ const workflow_json= {
       },
       "16": {
         "inputs": {
-          "image": "example.png",
+          "image": "house1.png",
           "choose file to upload": "image"
         },
         "class_type": "LoadImage"
