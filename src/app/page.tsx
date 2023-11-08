@@ -40,74 +40,19 @@ export default function Home() {
     });
   };
 
+  const testurl = "https://comfy-images.s3.eu-central-1.amazonaws.com/11-23/sync-b993cab0-e8fc-44c2-9c0b-f04a6efb1455-e1/aaca91b7.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAWCH5DUAHDRTNNSG4%2F20231108%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20231108T154251Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=eb22eea47bdb7e9fb7b2c8b1eb2cfecafcd90d306a1a02ac4eb3cc832ac8f140";
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
+              src={testurl}
+              alt="Image"
+              width={512}
+              height={512}
               priority
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <button onClick={handleFetchFromGithub}>Github Fetch<p>{"lol"}</p></button>
-
-        <button onClick={fetchRunpod}>Fetch me<p>{"lol"}</p></button>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <button className={styles.button} onClick={handleFetchFromGithub}>Github Fetch<p>{"lol"}</p></button>
+        <button className={styles.button} onClick={fetchRunpod}>Fetch me<p>{"lol"}</p></button>
     </main>
   );
 }
