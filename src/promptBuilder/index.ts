@@ -44,6 +44,22 @@ type Workflow_json = {
   };
 }
 
+type analysisDataInput = {
+  linesOfCode: number;
+  vulnerabilities: {
+    total: number;
+    totalDependencies: number;
+    stats: {
+      critical: number;
+      high: number;
+      moderate: number;
+      low: number;
+      info: number;
+    };
+  };
+  numberOfContributors: number;
+};
+
 type InterpolationInput = {
   positivePrompt: string;
   image: string;
@@ -65,12 +81,52 @@ function mapContributorsToString(numberOfContributors: number): string {
   }
 }
 
-function promptBuilder (input: any): InterpolationInput {
+function mapVulnerabilityToString(vulnerability: analysisDataInput['vulnerabilities']): string {
   let prompt = '';
+
+  const percentage = Math.round((vulnerability.total / vulnerability.totalDependencies) * 100);
+  const points = vulnerability.stats.critical * 4 + vulnerability.stats.high * 3 + vulnerability.stats.moderate * 2 + vulnerability.stats.low;
+  const total = percentage + points;
+  const totalDivided = Math.min(total / 2, 100);
+
+  if (totalDivided === 0) {
+    prompt = 'clean pristine walls';
+  } else if (totalDivided >= 1 && totalDivided <= 10) {
+    prompt = 'a few cracks in the walls';
+  } else if (totalDivided >= 11 && totalDivided <= 20) {
+    prompt = 'some cracks in the walls';
+  } else if (totalDivided >= 21 && totalDivided <= 30) {
+    prompt = 'many cracks in the walls';
+  } else if (totalDivided >= 31 && totalDivided <= 40) {
+    prompt = 'a few holes in the walls';
+  } else if (totalDivided >= 41 && totalDivided <= 50) {
+    prompt = 'some holes in the walls';
+  } else if (totalDivided >= 51 && totalDivided <= 60) {
+    prompt = 'many holes in the walls';
+  } else if (totalDivided >= 61 && totalDivided <= 70) {
+    prompt = 'some holes in the walls and broken windows';
+  } else if (totalDivided >= 71 && totalDivided <= 80) {
+    prompt = 'many holes in the walls and broken windows which are smoking';
+  } else if (totalDivided >= 81 && totalDivided <= 90) {
+    prompt = 'many holes in the walls and broken windows which are smoking and on fire';
+  } else if (totalDivided >= 91 && totalDivided <= 100) {
+    prompt = 'many holes in the walls and broken windows which are smoking and on fire and there is a tornado, destructed ruins';
+  } else {
+    prompt = 'clean pristine walls';
+  }
+
+  return prompt;
+}
+
+function promptBuilder (input: analysisDataInput): InterpolationInput {
+  let prompt = '';
+  const numberOfContributors = input.numberOfContributors ?? 0;
+
+  prompt += mapVulnerabilityToString(input.vulnerabilities);
 
   return {
     positivePrompt: prompt,
-    image: mapContributorsToString(1),
+    image: mapContributorsToString(numberOfContributors),
   };
 }
 
