@@ -71,10 +71,10 @@ export default function Home() {
         <Image src={imageURL} alt="Image" width={512} height={512} priority />
       )}
       <button className={styles.button} onClick={handleFetchFromGithub}>
-        Github Fetch<p>{'lol'}</p>
+        Github Fetch
       </button>
       <button className={styles.button} onClick={fetchRunpod}>
-        Fetch me<p>{'lol'}</p>
+        Fetch me
       </button>
     </main>
   );

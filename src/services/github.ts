@@ -1,8 +1,8 @@
-import { Octokit } from "octokit";
-import { AUTH_CONFIG } from "../../config/auth";
+import { Octokit } from 'octokit';
+import { AUTH_CONFIG } from '../../config/auth';
 
 const octokit = new Octokit({ auth: AUTH_CONFIG.githubToken });
-const ORGANIZATION_NAME = "ffw-germany";
+const ORGANIZATION_NAME = 'ffw-germany';
 
 export async function getUser() {
   console.log(AUTH_CONFIG);
@@ -10,10 +10,10 @@ export async function getUser() {
     data: { login },
     url,
   } = await octokit.rest.users.getAuthenticated();
-  console.log("Hello, %s", login, url);
+  console.log('Hello, %s', login, url);
 }
 
-//this function gets meta from github api
+//this function gets meta from GitHub api
 export async function getMeta() {
   const meta = await octokit.rest.meta.get();
   console.log(meta);
@@ -39,7 +39,7 @@ export async function listRepositories(teamSlug?: string) {
   const repos: any = [];
   for await (const res of octokit.paginate.iterator(
     octokit.rest.repos.listForOrg,
-    options
+    options,
   )) {
     repos.push(...res.data);
   }
@@ -57,7 +57,7 @@ export async function getRepositoryContributors(repo: string) {
   const repos: any = [];
   for await (const res of octokit.paginate.iterator(
     octokit.rest.repos.listContributors,
-    options
+    options,
   )) {
     repos.push(...res.data);
   }
