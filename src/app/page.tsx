@@ -53,34 +53,34 @@ const budniTestData: analysisDataInput = {
       info: 0,
     },
   },
-  numberOfContributors: 22,
+  numberOfContributors: 4,
 };
 
-const testData3: analysisDataInput = {
-  linesOfCode: 2250,
+const tuiNativeTestData: analysisDataInput = {
+  linesOfCode: 6896,
   vulnerabilities: {
     total: 0,
-    totalDependencies: 1187,
+    totalDependencies: 1868,
     stats: {
-      critical: 2,
+      critical: 0,
       high: 0,
       moderate: 0,
       low: 0,
       info: 0,
     },
   },
-  numberOfContributors: 22,
+  numberOfContributors: 2,
 };
 
-const testData4: analysisDataInput = {
-  linesOfCode: 2250,
+const tvtsWebAppTestData: analysisDataInput = {
+  linesOfCode: 42825,
   vulnerabilities: {
-    total: 0,
-    totalDependencies: 1187,
+    total: 48,
+    totalDependencies: 3622,
     stats: {
-      critical: 2,
-      high: 0,
-      moderate: 0,
+      critical: 3,
+      high: 26,
+      moderate: 19,
       low: 0,
       info: 0,
     },
@@ -131,9 +131,6 @@ export default function Home() {
         )}
       </div>
       <div className={styles.button_container}>
-        <button className={styles.button} onClick={handleFetchFromGithub}>
-          Github Fetch
-        </button>
         <button
           className={styles.button}
           onClick={() => fetchRunpod(ffwRoomsTestData)}
@@ -148,15 +145,15 @@ export default function Home() {
         </button>
         <button
           className={styles.button}
-          onClick={() => fetchRunpod(testData3)}
+          onClick={() => fetchRunpod(tuiNativeTestData)}
         >
-          Fetch me
+          TuiC Native
         </button>
         <button
           className={styles.button}
-          onClick={() => fetchRunpod(testData4)}
+          onClick={() => fetchRunpod(tvtsWebAppTestData)}
         >
-          Fetch me
+          TV / TS App
         </button>
       </div>
     </main>

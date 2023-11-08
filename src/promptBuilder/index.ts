@@ -133,12 +133,14 @@ function mapVulnerabilityToString(
     (vulnerability.total / vulnerability.totalDependencies) * 100,
   );
   const points =
-    vulnerability.stats.critical * 4 +
-    vulnerability.stats.high * 2 +
-    vulnerability.stats.moderate +
+    vulnerability.stats.critical * 5 +
+    vulnerability.stats.high * 3 +
+    vulnerability.stats.moderate * 2 +
     vulnerability.stats.low;
-  const total = percentage + points;
-  const totalDivided = Math.min(total / 2, 100);
+  const total = percentage * 2.5 + Math.min(points, 250);
+  const totalDivided = Math.round(Math.min(total / 3, 100));
+
+  console.log('totalDivided', totalDivided);
 
   if (totalDivided === 0) {
     prompt =
@@ -161,10 +163,10 @@ function mapVulnerabilityToString(
       'some holes in the walls and broken windows, dead nature around, broken trees';
   } else if (totalDivided >= 71 && totalDivided <= 80) {
     prompt =
-      'many holes in the walls and broken windows which are smoking, apocalyptic nature around';
+      'many holes in the walls and broken windows which are smoking, dark scenery';
   } else if (totalDivided >= 81 && totalDivided <= 90) {
     prompt =
-      'many holes in the walls and broken windows which are smoking and on fire, apocalyptic nature around, broken trees';
+      'many holes in the walls and broken windows which are smoking and on fire, dark scenery, broken trees';
   } else if (totalDivided >= 91 && totalDivided <= 100) {
     prompt =
       'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, big cracks, dust everywhere, apocalypse, apocalyptic scenery, zombie animals';
@@ -220,7 +222,7 @@ function interpolateJson({
         },
         '7': {
           inputs: {
-            text: 'bad quality, text, watermark, humans, person, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone',
+            text: 'bad quality, text, watermark, atomic mushroom cloud, humans, person, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone',
             clip: ['4', 1],
           },
           class_type: 'CLIPTextEncode',
