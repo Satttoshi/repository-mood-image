@@ -109,10 +109,22 @@ export default function Home() {
       password: password,
     };
 
-    fetcher('/api/runpod', runpodRequestData).then((data) => {
-      console.log(data);
-      setImageURL(data.message.output.message);
-    });
+    fetcher('/api/runpod', runpodRequestData)
+      .then((data) => {
+        console.log(data);
+        setImageURL(data.message.output.message);
+      })
+      .catch((error) => {
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.status === 401) {
+            alert('Wrong password!');
+          } else {
+            console.error('An error occurred:', error.message);
+          }
+        } else {
+          console.error('An error occurred:', error.message);
+        }
+      });
   };
 
   return (
