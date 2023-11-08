@@ -24,6 +24,70 @@ const fetcher = async (url: string, data: Workflow_json) => {
   return response.data;
 };
 
+const testData1: analysisDataInput = {
+  linesOfCode: 2250,
+  vulnerabilities: {
+    total: 0,
+    totalDependencies: 1187,
+    stats: {
+      critical: 2,
+      high: 0,
+      moderate: 0,
+      low: 0,
+      info: 0,
+    },
+  },
+  numberOfContributors: 22,
+};
+
+const testData2: analysisDataInput = {
+  linesOfCode: 2250,
+  vulnerabilities: {
+    total: 0,
+    totalDependencies: 1187,
+    stats: {
+      critical: 2,
+      high: 0,
+      moderate: 0,
+      low: 0,
+      info: 0,
+    },
+  },
+  numberOfContributors: 22,
+};
+
+const testData3: analysisDataInput = {
+  linesOfCode: 2250,
+  vulnerabilities: {
+    total: 0,
+    totalDependencies: 1187,
+    stats: {
+      critical: 2,
+      high: 0,
+      moderate: 0,
+      low: 0,
+      info: 0,
+    },
+  },
+  numberOfContributors: 22,
+};
+
+const testData4: analysisDataInput = {
+  linesOfCode: 2250,
+  vulnerabilities: {
+    total: 0,
+    totalDependencies: 1187,
+    stats: {
+      critical: 2,
+      high: 0,
+      moderate: 0,
+      low: 0,
+      info: 0,
+    },
+  },
+  numberOfContributors: 22,
+};
+
 export default function Home() {
   const [imageURL, setImageURL] = useState<string>('');
 
@@ -40,24 +104,8 @@ export default function Home() {
     );
   };
 
-  const fetchRunpod = async () => {
-    const testData: analysisDataInput = {
-      linesOfCode: 2250,
-      vulnerabilities: {
-        total: 0,
-        totalDependencies: 1187,
-        stats: {
-          critical: 2,
-          high: 0,
-          moderate: 0,
-          low: 0,
-          info: 0,
-        },
-      },
-      numberOfContributors: 22,
-    };
-
-    const requestData = promptBuilder(testData);
+  const fetchRunpod = async (analysisData: analysisDataInput) => {
+    const requestData = promptBuilder(analysisData);
 
     fetcher('/api/runpod', requestData).then((data) => {
       console.log(data);
@@ -67,15 +115,50 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      {imageURL && (
-        <Image src={imageURL} alt="Image" width={512} height={512} priority />
-      )}
-      <button className={styles.button} onClick={handleFetchFromGithub}>
-        Github Fetch
-      </button>
-      <button className={styles.button} onClick={fetchRunpod}>
-        Fetch me
-      </button>
+      <h1 className={styles.heading}>Repository Mood Image</h1>
+      <div>
+        {imageURL ? (
+          <Image
+            className={styles.image}
+            src={imageURL}
+            alt="Image"
+            width={512}
+            height={512}
+            priority
+          />
+        ) : (
+          <div className={styles.image_placeholder} />
+        )}
+      </div>
+      <div className={styles.button_container}>
+        <button className={styles.button} onClick={handleFetchFromGithub}>
+          Github Fetch
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(testData1)}
+        >
+          Fetch me
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(testData2)}
+        >
+          Fetch me
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(testData3)}
+        >
+          Fetch me
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(testData4)}
+        >
+          Fetch me
+        </button>
+      </div>
     </main>
   );
 }
