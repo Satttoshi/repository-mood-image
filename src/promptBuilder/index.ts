@@ -65,19 +65,19 @@ type InterpolationInput = {
   image: string;
 };
 
-function mapContributorsToString(numberOfContributors: number): string {
+function mapContributorsToPromptAndImage(numberOfContributors: number): { prompt: string, imageName: string } {
   if (numberOfContributors === 1) {
-    return 'house1.png';
+    return { prompt: 'A small house', imageName: 'house1.png' };
   } else if (numberOfContributors === 2) {
-    return 'house2.png';
+    return { prompt: 'A village house', imageName: 'house2.png' };
   } else if (numberOfContributors >= 3 && numberOfContributors <= 5) {
-    return 'house3.png';
+    return { prompt: 'A modern big house', imageName: 'house3.png' };
   } else if (numberOfContributors >= 6 && numberOfContributors <= 10) {
-    return 'house4.png';
+    return { prompt: 'A mansion', imageName: 'house4.png' };
   } else if (numberOfContributors >= 11) {
-    return 'house5.png';
+    return { prompt: 'A large big modern building', imageName: 'house5.png' };
   } else {
-    return 'house1.png';
+    return { prompt: 'A small house', imageName: 'house1.png' };
   }
 }
 
@@ -116,18 +116,6 @@ function mapVulnerabilityToString(vulnerability: analysisDataInput['vulnerabilit
   }
 
   return prompt;
-}
-
-function promptBuilder (input: analysisDataInput): InterpolationInput {
-  let prompt = '';
-  const numberOfContributors = input.numberOfContributors ?? 0;
-
-  prompt += mapVulnerabilityToString(input.vulnerabilities);
-
-  return {
-    positivePrompt: prompt,
-    image: mapContributorsToString(numberOfContributors),
-  };
 }
 
 function interpolateJson ({ positivePrompt, image }: InterpolationInput): Workflow_json {
@@ -270,3 +258,21 @@ function interpolateJson ({ positivePrompt, image }: InterpolationInput): Workfl
     }
   }
 }
+
+function promptBuilder (input: analysisDataInput): Workflow_json {
+  let prompt = '';
+  const numberOfContributors = input.numberOfContributors ?? 0;
+  const promptAndImage = mapContributorsToPromptAndImage(numberOfContributors);
+  prompt += promptAndImage.prompt;
+
+  prompt += mapVulnerabilityToString(input.vulnerabilities);
+
+  const interpolationInput: InterpolationInput = {
+    positivePrompt: prompt,
+    image: promptAndImage.imageName,
+  };
+
+  return interpolateJson(interpolationInput);
+}
+
+export default promptBuilder;
