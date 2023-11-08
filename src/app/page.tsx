@@ -9,10 +9,13 @@ import promptBuilder, {
   Workflow_json,
 } from '@/promptBuilder';
 import { useState } from 'react';
-import { RunpodRequestBody } from '@/app/api/runpod/route';
 
 type RunPodData = {
   message: { output: { message: string } };
+};
+
+export type RunpodRequestBody = Workflow_json & {
+  password: string;
 };
 
 const fetcher = async (url: string, data: RunpodRequestBody) => {

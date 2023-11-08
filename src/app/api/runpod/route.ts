@@ -1,14 +1,10 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
-import { Workflow_json } from '@/promptBuilder';
+import { RunpodRequestBody } from '@/app/page';
 
 const BEARER_TOKEN = process.env.RUNPOD_API_KEY;
 const RUNPOD_ENDPOINT_ID = process.env.RUNPOD_ENDPOINT_ID;
 const APP_PASSWORD = process.env.APP_PASSWORD;
-
-export type RunpodRequestBody = Workflow_json & {
-  password: string;
-};
 
 export async function POST(request: Request) {
   const requestBody: RunpodRequestBody = await request.json();
