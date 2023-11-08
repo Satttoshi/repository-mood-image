@@ -8,8 +8,35 @@ import {
   getUser,
   getRepositoryContributors,
 } from "@/services/github";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
+  const [runPodData, setRunPodData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const requestBody = {
+        };
+        const response = await axios.get('/api/runpod', requestBody);
+        setRunPodData(response.data);
+      } catch (err) {
+        setIsLoading(false);
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData().catch(console.error);
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(runPodData)
+
   const handleFetchFromGithub = async () => {
     console.log("hi");
     await getUser();
