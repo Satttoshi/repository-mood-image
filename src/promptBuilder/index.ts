@@ -118,7 +118,7 @@ function mapContributorsToHouseDescription(
   } else if (numberOfContributors >= 6 && numberOfContributors <= 10) {
     return 'lively birds in the sky';
   } else if (numberOfContributors >= 11) {
-    return 'very lively alot of animals around and birds in the sky';
+    return 'very lively, alot of animals walking around, birds in the sky';
   } else {
     return '';
   }
@@ -220,7 +220,7 @@ function interpolateJson({
         },
         '7': {
           inputs: {
-            text: 'bad quality, text, watermark, humans, person, animall, rane, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone',
+            text: 'bad quality, text, watermark, humans, person, frame, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured, drawing, painting, crayon, sketch, graphite, impressionist, noisy, blurry, soft, deformed, ugly, clone',
             clip: ['4', 1],
           },
           class_type: 'CLIPTextEncode',

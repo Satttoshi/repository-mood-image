@@ -42,19 +42,19 @@ export default function Home() {
 
   const fetchRunpod = async () => {
     const testData: analysisDataInput = {
-      linesOfCode: 69,
+      linesOfCode: 2250,
       vulnerabilities: {
         total: 0,
         totalDependencies: 1187,
         stats: {
-          critical: 10,
+          critical: 2,
           high: 0,
           moderate: 0,
           low: 0,
           info: 0,
         },
       },
-      numberOfContributors: 4,
+      numberOfContributors: 22,
     };
 
     const requestData = promptBuilder(testData);
