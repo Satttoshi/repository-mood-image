@@ -9,7 +9,6 @@ import {
   getRepositoryContributors,
 } from "@/services/github";
 import axios from 'axios';
-import useSWR from 'swr';
 
 type RunPodData = {
   message: string;
@@ -21,12 +20,12 @@ const fetcher = async (url: string) => {
 };
 
 export default function Home() {
-  const { data: runPodData, error } = useSWR<RunPodData, any>('/api/runpod', fetcher);
+  /*const { data: runPodData, error } = useSWR<RunPodData, any>('/api/runpod', fetcher);
 
   if (error) return <div>Error: {error.message}</div>;
   if (!runPodData) return <div>Loading...</div>;
 
-  console.log(runPodData);
+  console.log(runPodData);*/
 
   const handleFetchFromGithub = async () => {
     console.log("hi");
@@ -39,6 +38,12 @@ export default function Home() {
       `For ${repo}, we have: ${contributors.length} contributors.`,
       contributors
     );
+  };
+
+  const fetchRunpod = async () => {
+    fetcher('/api/runpod').then((data) => {
+      console.log(data);
+    });
   };
 
   return (
@@ -78,25 +83,10 @@ export default function Home() {
         />
       </div>
 
-      <div className={styles.grid} onClick={() => handleFetchFromGithub()}>
-        <span className={styles.card}>
-          <h2>
-            Github Fetch<span>-&gt;</span>
-          </h2>
-          <p>Click me to do magic.</p>
-        </span>
+      <div className={styles.grid}>
+        <button onClick={handleFetchFromGithub}>Github Fetch<p>{"lol"}</p></button>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <button onClick={fetchRunpod}>Fetch me<p>{"lol"}</p></button>
 
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
