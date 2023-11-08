@@ -2,24 +2,20 @@
 
 import Image from 'next/image';
 import styles from './page.module.css';
-import {
-  listRepositories,
-  listTeams,
-  getUser,
-  getRepositoryContributors,
-} from '@/services/github';
+import { getUser, getRepositoryContributors } from '@/services/github';
 import axios from 'axios';
 import promptBuilder, {
   analysisDataInput,
   Workflow_json,
 } from '@/promptBuilder';
 import { useState } from 'react';
+import { RunpodRequestBody } from '@/app/api/runpod/route';
 
 type RunPodData = {
   message: { output: { message: string } };
 };
 
-const fetcher = async (url: string, data: Workflow_json) => {
+const fetcher = async (url: string, data: RunpodRequestBody) => {
   const response = await axios.post<RunPodData>(url, data);
   return response.data;
 };
@@ -90,6 +86,7 @@ const tvtsWebAppTestData: analysisDataInput = {
 
 export default function Home() {
   const [imageURL, setImageURL] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleFetchFromGithub = async () => {
     console.log('hi');
@@ -105,9 +102,14 @@ export default function Home() {
   };
 
   const fetchRunpod = async (analysisData: analysisDataInput) => {
-    const requestData = promptBuilder(analysisData);
+    const requestData: Workflow_json = promptBuilder(analysisData);
 
-    fetcher('/api/runpod', requestData).then((data) => {
+    const runpodRequestData: RunpodRequestBody = {
+      ...requestData,
+      password: password,
+    };
+
+    fetcher('/api/runpod', runpodRequestData).then((data) => {
       console.log(data);
       setImageURL(data.message.output.message);
     });
@@ -129,6 +131,13 @@ export default function Home() {
         ) : (
           <div className={styles.image_placeholder} />
         )}
+      </div>
+      <div className={styles.input_container}>
+        <label htmlFor="password">Password:</label>
+        <input
+          type={'password'}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
       <div className={styles.button_container}>
         <button
