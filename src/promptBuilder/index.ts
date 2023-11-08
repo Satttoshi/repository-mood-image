@@ -44,7 +44,7 @@ type Workflow_json = {
   };
 }
 
-type analysisDataInput = {
+export type analysisDataInput = {
   linesOfCode: number;
   vulnerabilities: {
     total: number;
