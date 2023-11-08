@@ -106,6 +106,24 @@ function mapLinesOfCodeToPromptAndImage(linesOfCode: number): {
   }
 }
 
+function mapContributorsToHouseDescription(
+  numberOfContributors: number,
+): string {
+  if (numberOfContributors === 1) {
+    return '';
+  } else if (numberOfContributors === 2) {
+    return '';
+  } else if (numberOfContributors >= 3 && numberOfContributors <= 5) {
+    return 'lively some birds in the sky';
+  } else if (numberOfContributors >= 6 && numberOfContributors <= 10) {
+    return 'lively birds in the sky';
+  } else if (numberOfContributors >= 11) {
+    return 'very lively alot of animals around and birds in the sky';
+  } else {
+    return '';
+  }
+}
+
 function mapVulnerabilityToString(
   vulnerability: analysisDataInput['vulnerabilities'],
 ): string {
@@ -149,7 +167,7 @@ function mapVulnerabilityToString(
       'many holes in the walls and broken windows which are smoking and on fire, apocalyptic nature around, broken trees';
   } else if (totalDivided >= 91 && totalDivided <= 100) {
     prompt =
-      'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, big cracks, dust everywhere, apocalypse, apocalyptic scenery';
+      'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, big cracks, dust everywhere, apocalypse, apocalyptic scenery, zombie animals';
   } else {
     prompt = 'clean pristine walls';
   }
@@ -265,8 +283,10 @@ function promptBuilder(input: analysisDataInput): Workflow_json {
   const linesOfCode = input.linesOfCode ?? 0;
   const promptAndImage = mapLinesOfCodeToPromptAndImage(linesOfCode);
   prompt += promptAndImage.prompt;
-
+  prompt += ', ';
   prompt += mapVulnerabilityToString(input.vulnerabilities);
+  prompt += ', ';
+  prompt += mapContributorsToHouseDescription(numberOfContributors);
 
   const interpolationInput: InterpolationInput = {
     positivePrompt: prompt,
