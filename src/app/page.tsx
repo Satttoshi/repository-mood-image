@@ -44,12 +44,12 @@ export default function Home() {
     const testData: analysisDataInput = {
       linesOfCode: 69,
       vulnerabilities: {
-        total: 19,
+        total: 0,
         totalDependencies: 1187,
         stats: {
-          critical: 0,
-          high: 13,
-          moderate: 6,
+          critical: 10,
+          high: 0,
+          moderate: 0,
           low: 0,
           info: 0,
         },

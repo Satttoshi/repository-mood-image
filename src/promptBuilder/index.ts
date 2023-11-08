@@ -116,36 +116,40 @@ function mapVulnerabilityToString(
   );
   const points =
     vulnerability.stats.critical * 4 +
-    vulnerability.stats.high * 3 +
-    vulnerability.stats.moderate * 2 +
+    vulnerability.stats.high * 2 +
+    vulnerability.stats.moderate * 1 +
     vulnerability.stats.low;
   const total = percentage + points;
   const totalDivided = Math.min(total / 2, 100);
 
   if (totalDivided === 0) {
-    prompt = 'clean pristine walls';
+    prompt =
+      'clean pristine walls, beautiful nature around, trees and flowers, sunshine';
   } else if (totalDivided >= 1 && totalDivided <= 10) {
-    prompt = 'a few cracks in the walls';
+    prompt =
+      'a few cracks in the walls, nature around, beautiful trees and flowers';
   } else if (totalDivided >= 11 && totalDivided <= 20) {
-    prompt = 'some cracks in the walls';
+    prompt = 'some cracks in the walls, nature is in autumn';
   } else if (totalDivided >= 21 && totalDivided <= 30) {
-    prompt = 'many cracks in the walls';
+    prompt = 'many cracks in the walls, nature around is in autumn';
   } else if (totalDivided >= 31 && totalDivided <= 40) {
-    prompt = 'a few holes in the walls';
+    prompt = 'a few holes in the walls, dry nature around';
   } else if (totalDivided >= 41 && totalDivided <= 50) {
-    prompt = 'some holes in the walls';
+    prompt = 'some holes in the walls, dry nature around';
   } else if (totalDivided >= 51 && totalDivided <= 60) {
-    prompt = 'many holes in the walls';
+    prompt = 'many holes in the walls, very dry nature around';
   } else if (totalDivided >= 61 && totalDivided <= 70) {
-    prompt = 'some holes in the walls and broken windows';
+    prompt =
+      'some holes in the walls and broken windows, dead nature around, broken trees';
   } else if (totalDivided >= 71 && totalDivided <= 80) {
-    prompt = 'many holes in the walls and broken windows which are smoking';
+    prompt =
+      'many holes in the walls and broken windows which are smoking, apocalyptic nature around';
   } else if (totalDivided >= 81 && totalDivided <= 90) {
     prompt =
-      'many holes in the walls and broken windows which are smoking and on fire';
+      'many holes in the walls and broken windows which are smoking and on fire, apocalyptic nature around, broken trees';
   } else if (totalDivided >= 91 && totalDivided <= 100) {
     prompt =
-      'many holes in the walls and broken windows which are smoking and on fire and there is a tornado, destructed ruins';
+      'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, big cracks, dust everywhere, apocalypse, apocalyptic scenery';
   } else {
     prompt = 'clean pristine walls';
   }
