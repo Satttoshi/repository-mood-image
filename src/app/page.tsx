@@ -10,32 +10,24 @@ import {
 } from "@/services/github";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import useSWR from 'swr';
+
+type RunPodData = {
+  message: string;
+}
+
+const fetcher = async (url: string) => {
+  const response = await axios.get<RunPodData>(url);
+  return response.data;
+};
 
 export default function Home() {
-  const [runPodData, setRunPodData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data: runPodData, error } = useSWR<RunPodData, any>('/api/runpod', fetcher);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const requestBody = {
-        };
-        const response = await axios.get('/api/runpod', requestBody);
-        setRunPodData(response.data);
-      } catch (err) {
-        setIsLoading(false);
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData().catch(console.error);
-  }, []);
+  if (error) return <div>Error: {error.message}</div>;
+  if (!runPodData) return <div>Loading...</div>;
 
-  if (isLoading) return <div>Loading...</div>;
-
-  console.log(runPodData)
+  console.log(runPodData);
 
   const handleFetchFromGithub = async () => {
     console.log("hi");
