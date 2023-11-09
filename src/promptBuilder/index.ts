@@ -169,7 +169,8 @@ function mapVulnerabilityToString(
       'many holes in the walls and broken windows which are smoking and on fire, dark scenery, broken trees';
   } else if (totalDivided >= 91 && totalDivided <= 100) {
     prompt =
-      'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, big cracks, dust everywhere, apocalypse, apocalyptic scenery, zombie animals';
+      'many holes in the walls and broken windows which are on fire, there is a tornado, destructed ruins, ' +
+      'big cracks, dust everywhere, apocalypse, apocalyptic scenery, zombie animals';
   } else {
     prompt = 'clean pristine walls';
   }

@@ -90,6 +90,7 @@ const tvtsWebAppTestData: analysisDataInput = {
 export default function Home() {
   const [imageURL, setImageURL] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [imageIsLoading, setImageIsLoading] = useState<boolean>(false);
 
   const handleFetchFromGithub = async () => {
     console.log('hi');
@@ -106,6 +107,7 @@ export default function Home() {
 
   const fetchRunpod = async (analysisData: analysisDataInput) => {
     const requestData: Workflow_json = promptBuilder(analysisData);
+    setImageIsLoading(true);
 
     const runpodRequestData: RunpodRequestBody = {
       ...requestData,
@@ -115,9 +117,11 @@ export default function Home() {
     fetcher('/api/runpod', runpodRequestData)
       .then((data) => {
         console.log(data);
+        setImageIsLoading(false);
         setImageURL(data.message.output.message);
       })
       .catch((error) => {
+        setImageIsLoading(false);
         if (axios.isAxiosError(error) && error.response) {
           if (error.response.status === 401) {
             alert('Wrong password!');
@@ -133,7 +137,10 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <h1 className={styles.heading}>Repository Mood Image</h1>
-      <div>
+      <div className={styles.image_container}>
+        {imageIsLoading && (
+          <div className={styles.image_loading}>is generating image ...</div>
+        )}
         {imageURL ? (
           <Image
             onClick={() => setImageURL('')}
