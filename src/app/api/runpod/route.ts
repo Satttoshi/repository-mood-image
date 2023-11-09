@@ -6,6 +6,9 @@ const BEARER_TOKEN = process.env.RUNPOD_API_KEY;
 const RUNPOD_ENDPOINT_ID = process.env.RUNPOD_ENDPOINT_ID;
 const APP_PASSWORD = process.env.APP_PASSWORD;
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
   const requestBody: RunpodRequestBody = await request.json();
 
