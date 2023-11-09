@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import styles from './page.module.css';
-import { getUser, getRepositoryContributors } from '@/services/github';
 import axios from 'axios';
 import promptBuilder, {
   analysisDataInput,
@@ -87,23 +86,42 @@ const tvtsWebAppTestData: analysisDataInput = {
   numberOfContributors: 22,
 };
 
+const hvvSwitchTestData: analysisDataInput = {
+  linesOfCode: 278241,
+  vulnerabilities: {
+    total: 13,
+    totalDependencies: 1868,
+    stats: {
+      critical: 3,
+      high: 9,
+      moderate: 13,
+      low: 3,
+      info: 0,
+    },
+  },
+  numberOfContributors: 22,
+};
+
+const zdfAmpTestData: analysisDataInput = {
+  linesOfCode: 16917,
+  vulnerabilities: {
+    total: 25,
+    totalDependencies: 1868,
+    stats: {
+      critical: 8,
+      high: 7,
+      moderate: 7,
+      low: 0,
+      info: 0,
+    },
+  },
+  numberOfContributors: 13,
+};
+
 export default function Home() {
   const [imageURL, setImageURL] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [imageIsLoading, setImageIsLoading] = useState<boolean>(false);
-
-  const handleFetchFromGithub = async () => {
-    console.log('hi');
-    await getUser();
-    // const teams = await listTeams();
-    // console.log(await listRepositories(teams[0].slug));
-    const repo = 'BUDNI.de';
-    const contributors = await getRepositoryContributors(repo);
-    console.log(
-      `For ${repo}, we have: ${contributors.length} contributors.`,
-      contributors,
-    );
-  };
 
   const fetchRunpod = async (analysisData: analysisDataInput) => {
     const requestData: Workflow_json = promptBuilder(analysisData);
@@ -186,6 +204,18 @@ export default function Home() {
           onClick={() => fetchRunpod(tvtsWebAppTestData)}
         >
           TV / TS App
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(hvvSwitchTestData)}
+        >
+          HVV Switch Android
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => fetchRunpod(zdfAmpTestData)}
+        >
+          ZDF AMP
         </button>
       </div>
     </main>

@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  margin-bottom: 4rem;
 }
 
 .heading {
@@ -24,7 +25,7 @@
 .button {
   width: 240px;
   height: 100px;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 8px;
   background: var(--primary-glow);
 }

@@ -95,11 +95,11 @@ function mapLinesOfCodeToPromptAndImage(linesOfCode: number): {
     return { prompt: 'A small house', imageName: 'house1.png' };
   } else if (linesOfCode > 1000 && linesOfCode <= 10000) {
     return { prompt: 'A village house', imageName: 'house2.png' };
-  } else if (linesOfCode > 10000 && linesOfCode <= 100000) {
+  } else if (linesOfCode > 10000 && linesOfCode <= 50000) {
     return { prompt: 'A modern big house', imageName: 'house3.png' };
-  } else if (linesOfCode > 100000 && linesOfCode <= 500000) {
+  } else if (linesOfCode > 50000 && linesOfCode <= 200000) {
     return { prompt: 'A mansion', imageName: 'house4.png' };
-  } else if (linesOfCode > 500000) {
+  } else if (linesOfCode > 200000) {
     return { prompt: 'A large big modern building', imageName: 'house5.png' };
   } else {
     return { prompt: 'A small house', imageName: 'house1.png' };
